@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for you 🤍</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,600;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#f7f3ee;color:#1a1410;font-family:'Plus Jakarta Sans',sans-serif}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse 80% 60% at 50% 100%,rgba(210,190,160,.35) 0%,transparent 70%);pointer-events:none}
+
+/* ══ FLOWER SYSTEM ══
+   All petals share: bottom:0; left:50%
+   transform-origin:50% 100% → pivot = petal's own base-center
+   translateX(-50%) rotate(--r) scaleY(0→1) = fan bloom from one root point */
+
+.flower{position:fixed;pointer-events:none;z-index:1}
+.flower.bl{bottom:-16px;left:-16px}
+.flower.br{bottom:-16px;right:-16px;transform:scaleX(-1)}
+
+.petal{
+  position:absolute;bottom:0;left:50%;
+  transform-origin:50% 100%;
+  transform:translateX(-50%) rotate(var(--r)) scaleY(0);
+  animation:bloom .6s cubic-bezier(.4,0,.2,1) forwards var(--d);
+  opacity:0;
+}
+.petal::after{content:'';position:absolute;top:15%;left:20%;width:35%;height:45%;border-radius:50%;background:rgba(255,255,255,.2)}
+
+.center{position:absolute;bottom:0;left:50%;border-radius:50%;
+  transform:translateX(-50%) scale(0);
+  animation:pop .3s ease forwards var(--cd)}
+
+@keyframes bloom{
+  0%  {transform:translateX(-50%) rotate(var(--r)) scaleY(0);opacity:0}
+  65% {transform:translateX(-50%) rotate(var(--r)) scaleY(1.06);opacity:1}
+  100%{transform:translateX(-50%) rotate(var(--r)) scaleY(1);opacity:1}
+}
+@keyframes pop{0%{transform:translateX(-50%) scale(0)}70%{transform:translateX(-50%) scale(1.2)}100%{transform:translateX(-50%) scale(1)}}
+
+/* ══ WELCOME ══ */
+#welcome{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:8px;z-index:10;background:#f7f3ee;transition:opacity .7s ease;padding:24px;text-align:center}
+.w-small{font-size:clamp(12px,3vw,14px);color:#b09070;font-weight:300;animation:fadeUp .7s ease both}
+.w-title{font-family:'Instrument Serif',serif;font-size:clamp(32px,9vw,64px);font-style:italic;color:#1a1410;line-height:1.1;animation:fadeUp .8s .2s ease both}
+.w-sub{font-size:clamp(13px,3.5vw,15px);color:#a08060;font-weight:300;animation:fadeUp .7s .4s ease both;margin-top:2px}
+
+/* ══ ENVELOPE SCENE ══ */
+#env-scene{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:14px;z-index:5;opacity:0;pointer-events:none;transition:opacity .8s ease;padding-bottom:120px}
+#env-scene.show{opacity:1;pointer-events:all}
+.env-wrap{cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;animation:bounceIn .8s .3s cubic-bezier(.36,.07,.19,.97) both}
+.envelope{width:clamp(160px,45vw,220px);height:clamp(112px,31.5vw,154px);position:relative}
+.env-body{position:absolute;inset:0;background:#e8d8c0;border-radius:4px;box-shadow:0 10px 40px rgba(100,70,30,.18)}
+.env-flap{position:absolute;top:0;left:0;right:0;height:55%;background:#ddc9a8;clip-path:polygon(0 0,100% 0,50% 100%);transform-origin:top center;transition:transform .65s cubic-bezier(.4,0,.2,1);z-index:3}
+.wax-seal{position:absolute;top:22%;left:50%;transform:translateX(-50%);width:clamp(22px,6vw,30px);height:clamp(22px,6vw,30px);background:radial-gradient(circle at 35% 35%,#e8a056,#b05d20);border-radius:50%;z-index:4;display:flex;align-items:center;justify-content:center;font-size:clamp(8px,2vw,11px);color:rgba(255,255,255,.9);box-shadow:0 2px 6px rgba(0,0,0,.2);transition:opacity .35s,transform .35s}
+.env-line-l{position:absolute;bottom:0;left:0;width:50%;height:100%;z-index:2;background:linear-gradient(to top right,transparent 49.5%,#cdb896 49.5%,#cdb896 50.5%,transparent 50.5%)}
+.env-line-r{position:absolute;bottom:0;right:0;width:50%;height:100%;z-index:2;background:linear-gradient(to top left,transparent 49.5%,#cdb896 49.5%,#cdb896 50.5%,transparent 50.5%)}
+.env-wrap.opened .env-flap{transform:rotateX(180deg)}
+.env-wrap.opened .wax-seal{opacity:0;transform:translateX(-50%) scale(.6)}
+.tap-hint{font-size:clamp(11px,3vw,13px);color:#b09070;font-style:italic;transition:opacity .4s}
+
+/* ══ POPUP ══ */
+#popup{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;z-index:20;background:rgba(26,20,16,.28);backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .5s ease}
+#popup.show{opacity:1;pointer-events:all}
+.popup-card{background:#fdf9f4;border-radius:20px;padding:clamp(24px,6vw,40px) clamp(22px,5vw,36px);max-width:360px;width:90%;text-align:center;box-shadow:0 24px 64px rgba(100,70,30,.22);transform:translateY(18px);transition:transform .5s ease}
+#popup.show .popup-card{transform:translateY(0)}
+.popup-label{font-family:'Instrument Serif',serif;font-size:clamp(20px,5.5vw,26px);font-style:italic;color:#1a1410;margin-bottom:5px}
+.popup-hint{font-size:clamp(12px,3vw,13px);color:#a08060;font-weight:300;margin-bottom:20px}
+#name-input{width:100%;padding:12px 16px;border:none;border-bottom:2px solid #ddd0bc;background:transparent;font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(15px,4vw,17px);color:#1a1410;text-align:center;outline:none;transition:border-color .3s;-webkit-appearance:none}
+#name-input:focus{border-bottom-color:#a08060}
+#name-input::placeholder{color:#c8b090;font-style:italic}
+#name-error{font-size:12px;color:#c06040;font-style:italic;margin-top:7px;min-height:16px;opacity:0;transition:opacity .3s}
+#name-error.show{opacity:1}
+.popup-btn{margin-top:18px;width:100%;padding:13px;background:#1a1410;color:#f7f3ee;border:none;border-radius:12px;font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(13px,3.5vw,15px);font-weight:600;cursor:pointer;transition:opacity .2s,transform .15s;-webkit-appearance:none}
+.popup-btn:hover{opacity:.85}
+.popup-btn:active{transform:scale(.98)}
+
+/* ══ HUB ══ */
+#hub{position:fixed;inset:0;overflow-y:auto;z-index:5;opacity:0;pointer-events:none;transition:opacity .7s ease;padding:48px 20px 140px;display:flex;flex-direction:column;align-items:center;gap:16px}
+#hub.show{opacity:1;pointer-events:all}
+.hub-hey{font-size:clamp(13px,3.5vw,15px);color:#a08060;font-weight:300;text-align:center}
+.hub-title{font-family:'Instrument Serif',serif;font-size:clamp(24px,6.5vw,38px);font-style:italic;color:#1a1410;text-align:center;line-height:1.2}
+.hub-sub{font-size:clamp(11px,2.8vw,13px);color:#b09070;font-weight:300;text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:10px;width:100%;max-width:490px}
+.card{aspect-ratio:1;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;transition:transform .25s,box-shadow .25s}
+.card.locked{background:#ede8de;border:1px solid #ddd0bc;opacity:.4;cursor:default}
+.lock-icon{font-size:18px;opacity:.4}
+.lock-lbl{font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:#b09070;opacity:.7}
+.card.unlocked{background:#1a1410;cursor:pointer;box-shadow:0 8px 28px rgba(26,20,16,.22),0 0 0 3px rgba(26,20,16,.06);animation:cardPulse 2.5s ease infinite}
+.card.unlocked:hover{transform:translateY(-4px)}
+.card.unlocked:active{transform:scale(.97)}
+.unlock-name{font-family:'Instrument Serif',serif;font-size:clamp(14px,3.5vw,16px);color:#f7f3ee;font-style:italic;text-align:center;padding:0 6px;line-height:1.2}
+.unlock-open{font-size:10px;color:rgba(247,243,238,.45);letter-spacing:.1em;text-transform:uppercase}
+.no-match-msg{font-family:'Instrument Serif',serif;font-size:clamp(17px,4.5vw,22px);font-style:italic;color:#a08060;text-align:center;max-width:300px;line-height:1.7;animation:fadeUp .8s .3s ease both;grid-column:1/-1;padding:20px 0}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounceIn{0%{opacity:0;transform:scale(.7) translateY(28px)}60%{transform:scale(1.05) translateY(-6px)}80%{transform:scale(.98) translateY(2px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+@keyframes cardPulse{0%,100%{box-shadow:0 8px 28px rgba(26,20,16,.22),0 0 0 3px rgba(26,20,16,.06)}50%{box-shadow:0 8px 28px rgba(26,20,16,.35),0 0 0 5px rgba(26,20,16,.12)}}
+</style>
+</head>
+<body>
+
+<!-- warm amber tulips at bottom corners -->
+<div class="flower bl" style="width:90px;height:95px">
+  <div class="petal" style="--r:-26deg;--d:.5s;width:17px;height:46px;border-radius:50% 50% 30% 30%/55% 55% 45% 45%;background:linear-gradient(to top,#a06820,#d4a040)"></div>
+  <div class="petal" style="--r:0deg;  --d:.62s;width:19px;height:52px;border-radius:50% 50% 30% 30%/55% 55% 45% 45%;background:linear-gradient(to top,#b07828,#e0b04a)"></div>
+  <div class="petal" style="--r:26deg; --d:.55s;width:17px;height:46px;border-radius:50% 50% 30% 30%/55% 55% 45% 45%;background:linear-gradient(to top,#a06820,#d4a040)"></div>
+  <div class="center" style="width:8px;height:8px;background:#f5d070;--cd:.95s"></div>
+</div>
+<div class="flower br" style="width:90px;height:95px">
+  <div class="petal" style="--r:-26deg;--d:.5s;width:17px;height:46px;border-radius:50% 50% 30% 30%/55% 55% 45% 45%;background:linear-gradient(to top,#a06820,#d4a040)"></div>
+  <div class="petal" style="--r:0deg;  --d:.62s;width:19px;height:52px;border-radius:50% 50% 30% 30%/55% 55% 45% 45%;background:linear-gradient(to top,#b07828,#e0b04a)"></div>
+  <div class="petal" style="--r:26deg; --d:.55s;width:17px;height:46px;border-radius:50% 50% 30% 30%/55% 55% 45% 45%;background:linear-gradient(to top,#a06820,#d4a040)"></div>
+  <div class="center" style="width:8px;height:8px;background:#f5d070;--cd:.95s"></div>
+</div>
+
+<div id="welcome">
+  <div class="w-small">hey 👀</div>
+  <div class="w-title">this is for you</div>
+  <div class="w-sub">your letter's waiting</div>
+</div>
+
+<div id="env-scene">
+  <div class="env-wrap" id="env-wrap">
+    <div class="envelope">
+      <div class="env-body"></div>
+      <div class="env-flap"></div>
+      <div class="wax-seal">✦</div>
+      <div class="env-line-l"></div>
+      <div class="env-line-r"></div>
+    </div>
+  </div>
+  <div class="tap-hint" id="tap-hint">tap to open</div>
+</div>
+
+<div id="popup">
+  <div class="popup-card">
+    <div class="popup-label">what's your name?</div>
+    <div class="popup-hint">enter your full name to find your page</div>
+    <input type="text" id="name-input" placeholder="full name here" autocomplete="off" autocorrect="off" spellcheck="false"/>
+    <div id="name-error"></div>
+    <button class="popup-btn" id="submit-btn">find my page →</button>
+  </div>
+</div>
+
+<div id="hub">
+  <div class="hub-hey" id="hub-hey">hey,</div>
+  <div class="hub-title" id="hub-title">found something for you</div>
+  <div class="hub-sub" id="hub-sub">tap your card to open it</div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<script>
+const PEOPLE=[
+  {name:"Clarence Jurado",        file:"clarence.html"},
+  {name:"Jay-ar Asagra Mirabete", file:"jayar.html"},
+  {name:"John Rodulf Pomida",     file:"john.html"},
+  {name:"Lynzie Dennice Moñaco",  file:"lynzie.html"},
+  {name:"Mhirachle Castillo",     file:"mhirachle.html"},
+  {name:"Roxanne Maquiling",      file:"roxanne.html"},
+  {name:"Vincent Navarez",        file:"vincent.html"},
+];
+const welcome=document.getElementById('welcome'),envScene=document.getElementById('env-scene'),
+  envWrap=document.getElementById('env-wrap'),tapHint=document.getElementById('tap-hint'),
+  popup=document.getElementById('popup'),nameInput=document.getElementById('name-input'),
+  nameError=document.getElementById('name-error'),submitBtn=document.getElementById('submit-btn'),
+  hub=document.getElementById('hub'),hubHey=document.getElementById('hub-hey'),
+  hubTitle=document.getElementById('hub-title'),hubSub=document.getElementById('hub-sub'),
+  grid=document.getElementById('grid');
+
+setTimeout(()=>{
+  welcome.style.opacity='0';
+  setTimeout(()=>{welcome.style.display='none';envScene.classList.add('show')},700);
+},2200);
+
+envWrap.addEventListener('click',()=>{
+  if(envWrap.classList.contains('opened'))return;
+  envWrap.classList.add('opened');tapHint.style.opacity='0';
+  setTimeout(()=>{popup.classList.add('show');setTimeout(()=>nameInput.focus(),300)},700);
+});
+submitBtn.addEventListener('click',go);
+nameInput.addEventListener('keydown',e=>{if(e.key==='Enter')go()});
+function norm(s){return s.trim().replace(/\s+/g,' ')}
+function showErr(m){nameError.textContent=m;nameError.classList.add('show');setTimeout(()=>nameError.classList.remove('show'),2500)}
+function go(){
+  const raw=norm(nameInput.value);
+  if(!raw){showErr('put your name first!');return}
+  let idx=-1;
+  for(let i=0;i<PEOPLE.length;i++){if(PEOPLE[i].name.toLowerCase()===raw.toLowerCase()){idx=i;break}}
+  popup.style.opacity='0';popup.style.transition='opacity .5s';setTimeout(()=>popup.style.display='none',500);
+  envScene.style.opacity='0';envScene.style.transition='opacity .5s';setTimeout(()=>envScene.style.display='none',500);
+  const first=idx>=0?PEOPLE[idx].name.split(' ')[0]:raw.split(' ')[0];
+  hubHey.textContent=`hey, ${first} 👋`;
+  if(idx<0){
+    hubTitle.textContent="couldn't find your page";
+    hubSub.innerHTML='<em>but congrats anyway 🎉</em>';
+    const msg=document.createElement('div');msg.className='no-match-msg';
+    msg.textContent='"I\'m proud of you. You made it through."';grid.appendChild(msg);
+    for(let i=0;i<7;i++)grid.appendChild(mkLocked());
+  } else {
+    hubSub.textContent='your card is glowing ✨';
+    for(let i=0;i<PEOPLE.length;i++)grid.appendChild(i===idx?mkUnlocked(PEOPLE[i]):mkLocked());
+  }
+  setTimeout(()=>hub.classList.add('show'),600);
+}
+function mkLocked(){
+  const c=document.createElement('div');c.className='card locked';
+  c.innerHTML='<div class="lock-icon">🔒</div><div class="lock-lbl">sealed</div>';return c;
+}
+function mkUnlocked(p){
+  const c=document.createElement('div');c.className='card unlocked';
+  c.innerHTML=`<div class="unlock-name">${p.name.split(' ')[0]}</div><div class="unlock-open">open →</div>`;
+  c.addEventListener('click',()=>window.location.href=p.file);return c;
+}
+</script>
+</body>
+</html>

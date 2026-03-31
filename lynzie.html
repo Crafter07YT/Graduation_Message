@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>lynzie 🌹</title>
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Cormorant+Garamond:ital,wght@0,300;1,600&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#08040a;color:#fce8f0;font-family:'Jost',sans-serif}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 70% 55% at 50% 108%,rgba(210,50,110,.32) 0%,transparent 65%),
+             radial-gradient(ellipse 40% 32% at 12% 18%,rgba(160,25,70,.22) 0%,transparent 60%)}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;
+  background:radial-gradient(ellipse 75% 70% at 50% 50%,transparent 35%,rgba(0,0,0,.5) 100%)}
+
+/* ── ROSE SYSTEM
+   A rose = 5 outer petals (wide, spread) + 3 inner petals (narrow, upright) + bud
+   All petals rooted at bottom-center of .flower container
+   Outer petals are wider/shorter, inner are narrower/taller ── */
+
+.flower{position:fixed;pointer-events:none;z-index:1}
+.flower.bl{bottom:-16px;left:-16px}
+.flower.br{bottom:-16px;right:-16px;transform:scaleX(-1)}
+
+/* shared petal */
+.petal{position:absolute;bottom:0;left:50%;transform-origin:50% 100%;
+  transform:translateX(-50%) rotate(var(--r)) scaleY(0);
+  animation:bloom .6s cubic-bezier(.4,0,.2,1) forwards var(--d);opacity:0}
+.petal::after{content:'';position:absolute;top:18%;left:18%;width:34%;height:44%;border-radius:50%;background:rgba(255,220,235,.2)}
+.center{position:absolute;bottom:2px;left:50%;border-radius:50%;transform:translateX(-50%) scale(0);animation:pop .3s ease forwards var(--cd)}
+
+/* outer rose petals: wide & low spread */
+.op{width:clamp(16px,4vw,23px);height:clamp(28px,7vw,42px);border-radius:50% 50% 38% 38%/58% 58% 42% 42%}
+/* inner petals: narrow & taller */
+.ip{width:clamp(10px,2.5vw,15px);height:clamp(32px,8vw,48px);border-radius:50% 50% 32% 32%/58% 58% 42% 42%}
+
+@keyframes bloom{0%{transform:translateX(-50%) rotate(var(--r)) scaleY(0);opacity:0}65%{transform:translateX(-50%) rotate(var(--r)) scaleY(1.06);opacity:1}100%{transform:translateX(-50%) rotate(var(--r)) scaleY(1);opacity:1}}
+@keyframes pop{0%{transform:translateX(-50%) scale(0)}70%{transform:translateX(-50%) scale(1.2)}100%{transform:translateX(-50%) scale(1)}}
+
+/* ── CONTENT ── */
+.scene{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(50px,10vh,70px) clamp(24px,6vw,40px);text-align:center;z-index:2}
+.tag{font-size:clamp(10px,2.5vw,12px);letter-spacing:.45em;text-transform:uppercase;color:rgba(238,130,170,.5);font-weight:300;margin-bottom:12px;opacity:0;animation:fadeUp .7s .2s ease forwards}
+.name-script{font-family:'Great Vibes',cursive;font-size:clamp(52px,14vw,108px);color:#fce8f0;line-height:.95;opacity:0;animation:fadeUp 1s .5s ease forwards;filter:drop-shadow(0 2px 18px rgba(220,60,120,.28))}
+.name-sub{font-family:'Cormorant Garamond',serif;font-size:clamp(13px,3.5vw,18px);font-style:italic;font-weight:300;color:rgba(238,140,178,.6);letter-spacing:.28em;opacity:0;animation:fadeUp .7s .75s ease forwards;margin-top:2px;margin-bottom:18px}
+.rule{width:0;height:1px;background:linear-gradient(to right,transparent,rgba(230,90,140,.6),transparent);animation:expandW .8s 1.05s ease forwards;margin:0 auto 20px}
+.message{font-family:'Cormorant Garamond',serif;font-size:clamp(17px,4.8vw,23px);font-style:italic;color:rgba(252,232,240,.8);line-height:1.85;max-width:400px;opacity:0;animation:fadeUp .8s 1.45s ease forwards;padding:0 10px}
+.back{position:fixed;top:20px;left:20px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(230,90,140,.4);text-decoration:none;transition:color .25s;opacity:0;animation:fadeUp .5s .1s ease forwards}
+.back:hover{color:rgba(230,90,140,.85)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes expandW{from{width:0}to{width:min(230px,52vw)}}
+</style>
+</head>
+<body>
+<!-- bottom-left rose -->
+<div class="flower bl" style="width:100px;height:100px">
+  <!-- 5 outer petals spread -40 → +40 deg -->
+  <div class="petal op" style="--r:-40deg;--d:.5s; background:linear-gradient(to top,#901540,#e04070)"></div>
+  <div class="petal op" style="--r:-20deg;--d:.58s;background:linear-gradient(to top,#a81c50,#f05080)"></div>
+  <div class="petal op" style="--r:0deg;  --d:.54s;background:linear-gradient(to top,#a81c50,#f05080)"></div>
+  <div class="petal op" style="--r:20deg; --d:.62s;background:linear-gradient(to top,#901540,#e04070)"></div>
+  <div class="petal op" style="--r:40deg; --d:.56s;background:linear-gradient(to top,#901540,#e04070)"></div>
+  <!-- 3 inner petals -->
+  <div class="petal ip" style="--r:-16deg;--d:.75s;background:linear-gradient(to top,#c02860,#ff70a0)"></div>
+  <div class="petal ip" style="--r:0deg;  --d:.82s;background:linear-gradient(to top,#d03070,#ff80b0)"></div>
+  <div class="petal ip" style="--r:16deg; --d:.78s;background:linear-gradient(to top,#c02860,#ff70a0)"></div>
+  <!-- bud -->
+  <div class="center" style="width:10px;height:12px;border-radius:50% 50% 40% 40%;background:linear-gradient(to top,#d83068,#ff90b8);--cd:1.05s"></div>
+</div>
+<!-- bottom-right rose (mirrored via scaleX(-1)) -->
+<div class="flower br" style="width:100px;height:100px">
+  <div class="petal op" style="--r:-40deg;--d:.5s; background:linear-gradient(to top,#901540,#e04070)"></div>
+  <div class="petal op" style="--r:-20deg;--d:.58s;background:linear-gradient(to top,#a81c50,#f05080)"></div>
+  <div class="petal op" style="--r:0deg;  --d:.54s;background:linear-gradient(to top,#a81c50,#f05080)"></div>
+  <div class="petal op" style="--r:20deg; --d:.62s;background:linear-gradient(to top,#901540,#e04070)"></div>
+  <div class="petal op" style="--r:40deg; --d:.56s;background:linear-gradient(to top,#901540,#e04070)"></div>
+  <div class="petal ip" style="--r:-16deg;--d:.75s;background:linear-gradient(to top,#c02860,#ff70a0)"></div>
+  <div class="petal ip" style="--r:0deg;  --d:.82s;background:linear-gradient(to top,#d03070,#ff80b0)"></div>
+  <div class="petal ip" style="--r:16deg; --d:.78s;background:linear-gradient(to top,#c02860,#ff70a0)"></div>
+  <div class="center" style="width:10px;height:12px;border-radius:50% 50% 40% 40%;background:linear-gradient(to top,#d83068,#ff90b8);--cd:1.05s"></div>
+</div>
+
+<a class="back" href="index.html">← back</a>
+<div class="scene">
+  <div class="tag">for lynzie</div>
+  <div class="name-script">Lynzie</div>
+  <div class="name-sub">Dennice Moñaco</div>
+  <div class="rule"></div>
+    <div class="message">"Dear Lynzie, congratulations for our graduation and to your achievements. Even tho we won't see each other everyday again I hope we will still maintain our solid friendship. Thank you for being a part of my journey and I hope we could hangout again next time, you guys helped me a lot during my depressed time and you guys meant so much to me.
+Haii Ate Lynzie, ay wow grabe napakanta ako kahit sintunado ako. But all jokes aside thank you for pushing me to open up that time, you don't know it but it helped me so much and it saved my life that time. I prayed for God to help me meet a person who can help me stand up again, turns out I already met them. There's three of them and that's you, Mhira and Roxy. I don't know how to properly thank you for saving my life but I just wanted to let you know that I appreciate your kindness and thoughtfulness, and again thank you for saving me. I hope the best for your future journey ✨"</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>mhirachle 🌷</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,700;1,400&family=Cinzel:wght@400;700&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow:hidden;background:#060409;color:#f0eaf8;font-family:'Jost',sans-serif}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse 65% 50% at 50% 110%,rgba(105,25,165,.58) 0%,transparent 65%), radial-gradient(ellipse 38% 30% at 90% 8%,rgba(70,10,118,.42) 0%,transparent 58%)}
+
+.flower{position:fixed;pointer-events:none;z-index:1}
+.flower.bl{bottom:-16px;left:-16px}
+.flower.br{bottom:-16px;right:-16px;transform:scaleX(-1)}
+.petal{position:absolute;bottom:0;left:50%;transform-origin:50% 100%;transform:translateX(-50%) rotate(var(--r)) scaleY(0);animation:bloom .6s cubic-bezier(.4,0,.2,1) forwards var(--d);opacity:0}
+.petal::after{content:'';position:absolute;top:15%;left:20%;width:35%;height:45%;border-radius:50%;background:rgba(255,255,255,.18)}
+.center{position:absolute;bottom:0;left:50%;border-radius:50%;transform:translateX(-50%) scale(0);animation:pop .3s ease forwards var(--cd)}
+@keyframes bloom{0%{transform:translateX(-50%) rotate(var(--r)) scaleY(0);opacity:0}65%{transform:translateX(-50%) rotate(var(--r)) scaleY(1.06);opacity:1}100%{transform:translateX(-50%) rotate(var(--r)) scaleY(1);opacity:1}}
+@keyframes pop{0%{transform:translateX(-50%) scale(0)}70%{transform:translateX(-50%) scale(1.2)}100%{transform:translateX(-50%) scale(1)}}
+
+.scene{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(40px,8vh,60px) clamp(24px,6vw,40px);text-align:center;z-index:2}
+.tag{font-size:clamp(10px,2.5vw,12px);letter-spacing:.45em;text-transform:uppercase;color:rgba(175,110,240,.5);font-weight:300;margin-bottom:14px;opacity:0;animation:fadeUp .7s .2s ease forwards}
+.name-first{font-family:'Cinzel', serif;font-size:clamp(30px,8.5vw,66px);font-weight:700;color:#f0eaf8;display:block;line-height:1;opacity:0;animation:fadeUp .9s .5s ease forwards}
+.name-middle{font-family:'Cinzel', serif;font-size:clamp(16px,4vw,28px);font-weight:300;font-style:italic;color:rgba(220,210,240,.4);display:block;letter-spacing:.06em;opacity:0;animation:fadeUp .8s .6s ease forwards}
+.name-last{font-family:'Cinzel', serif;font-size:clamp(20px,5.5vw,40px);font-weight:400;font-style:normal;color:rgba(175,110,240,.72);display:block;letter-spacing:.05em;line-height:1.1;opacity:0;animation:fadeUp .85s .55s ease forwards}
+.rule{width:0;height:1px;background:linear-gradient(to right,transparent,rgba(152,80,228,.7),transparent);animation:expandW .8s 1.05s ease forwards;margin:18px auto}
+.message{font-family:'Jost', sans-serif;font-size:clamp(16px,4.5vw,22px);font-style:italic;color:rgba(237,230,248,.78);line-height:1.85;max-width:420px;opacity:0;animation:fadeUp .8s 1.4s ease forwards;padding:0 10px}
+.back{position:fixed;top:20px;left:20px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:rgba(152,80,228,.4);text-decoration:none;transition:color .25s;opacity:0;animation:fadeUp .5s .1s ease forwards}
+.back:hover{color:rgba(152,80,228,.85)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+@keyframes expandW{from{width:0}to{width:min(240px,55vw)}}
+</style>
+</head>
+<body>
+
+<div class="flower bl" style="width:96px;height:102px">
+  <div class="petal" style="--r:-30deg;--d:.5s;width:16px;height:46px;border-radius:50% 50% 28% 28%/55% 55% 45% 45%;background:linear-gradient(to top,#4a0e80,#9040d8)"></div>
+  <div class="petal" style="--r:-10deg;--d:.6s; width:17px;height:52px;border-radius:50% 50% 28% 28%/55% 55% 45% 45%;background:linear-gradient(to top,#5a15a0,#aa4ef8)"></div>
+  <div class="petal" style="--r:10deg; --d:.55s;width:17px;height:52px;border-radius:50% 50% 28% 28%/55% 55% 45% 45%;background:linear-gradient(to top,#5a15a0,#aa4ef8)"></div>
+  <div class="petal" style="--r:30deg; --d:.65s;width:16px;height:46px;border-radius:50% 50% 28% 28%/55% 55% 45% 45%;background:linear-gradient(to top,#4a0e80,#9040d8)"></div>
+  <div class="center" style="width:9px;height:9px;background:#d0a0ff;box-shadow:0 0 8px rgba(208,160,255,.8);--cd:1.0s"></div>
+</div>
+<div class="flower br" style="width:96px;height:102px">
+  <div class="petal" style="--r:-30deg;--d:.5s;width:16px;height:46px;border-radius:50% 50% 28% 28%/55% 55% 45% 45%;background:linear-gradient(to top,#4a0e80,#9040d8)"></div>
+  <div class="petal" style="--r:-10deg;--d:.6s; width:17px;height:52px;border-radius:50% 50% 28% 28%/55% 55% 45% 45%;background:linear-gradient(to top,#5a15a0,#aa4ef8)"></div>
+  <div class="petal" style="--r:10deg; --d:.55s;width:17px;height:52px;border-radius:50% 50% 28% 28%/55% 55% 45% 45%;background:linear-gradient(to top,#5a15a0,#aa4ef8)"></div>
+  <div class="petal" style="--r:30deg; --d:.65s;width:16px;height:46px;border-radius:50% 50% 28% 28%/55% 55% 45% 45%;background:linear-gradient(to top,#4a0e80,#9040d8)"></div>
+  <div class="center" style="width:9px;height:9px;background:#d0a0ff;box-shadow:0 0 8px rgba(208,160,255,.8);--cd:1.0s"></div>
+</div>
+<a class="back" href="index.html">← back</a>
+<div class="scene">
+  <div class="tag">for mhirachle</div>
+  <span class="name-first">Mhirachle</span>
+  <span class="name-last">Castillo</span>
+  <div class="rule"></div>
+  <div class="message">"Dear Mhira, congratulations for our graduation and to your achievements. Even tho we won't see each other everyday again I hope we will still maintain our solid friendship. Thank you for being a part of my journey and I hope we could hangout again next time, you guys helped me a lot during my depressed time and you guys meant so much to me.
+Mhira mhira mhira, diko alam kung babae or lalaki but one thing is for sure and that is you've became one of my closest friend. Thank you for your support, you might not know it but your words inspired me to not give up. You're one of the people who changed my perspective in life and those who helped me improve myself. Good luck to your future journey and if you needed someone to talk to, I'll be here, always willing to help the same way you helped me. I hope you all the goodluck, wellness and prosperity. Slayyy 💅"</div>
+</div>
+</body>
+</html>
